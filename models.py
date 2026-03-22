@@ -77,10 +77,6 @@ class UserProfile(Base):
     user: Mapped["User"] = relationship("User", back_populates="profile")
 
     def __str__(self):
-        # We need to be careful if user is not loaded
-        # However, for Admin Panel it usually lazy loads or we can rely on what's available
-        # Ideally we check if self.user is populated. 
-        # But 'self.user' access might trigger a DB call if session is active.
         try:
             return f"Анкета: {self.user.full_name}"
         except:
@@ -102,7 +98,7 @@ class FoodLog(Base):
     photo_id: Mapped[Optional[str]] = mapped_column(String, nullable=True)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=func.now())
 
-    # Relationship
+
     user: Mapped["User"] = relationship("User", back_populates="food_logs")
 
     def __str__(self):
@@ -118,7 +114,7 @@ class MealPlan(Base):
     total_calories: Mapped[int] = mapped_column(Integer)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=func.now())
 
-    # Relationship
+    
     user: Mapped["User"] = relationship("User", back_populates="meal_plans")
 
     def __str__(self):
@@ -136,7 +132,7 @@ class Transaction(Base):
     description: Mapped[str] = mapped_column(String)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=func.now())
 
-    # Relationship
+ 
     user: Mapped["User"] = relationship("User", back_populates="transactions")
 
     def __str__(self):
